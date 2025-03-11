@@ -62,11 +62,6 @@ class Executor:
                 'enableRateLimit': True,
             })
             
-            # Use testnet if in test mode
-            if self.test_mode and 'test' in self.exchange.urls:
-                self.exchange.urls['api'] = self.exchange.urls['test']
-                logger.info(f"Using test environment for {self.exchange_id}")
-            
             # Load markets
             await self.exchange.load_markets()
             logger.info(f"Successfully connected to {self.exchange_id} and loaded markets")

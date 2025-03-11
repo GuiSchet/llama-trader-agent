@@ -32,7 +32,7 @@ load_dotenv()
 EXCHANGE_ID = os.getenv('EXCHANGE_ID', 'binance')
 API_KEY = os.getenv('API_KEY', None)
 API_SECRET = os.getenv('API_SECRET', None)
-TEST_MODE = os.getenv('TEST_MODE', 'True').lower() in ('true', '1', 't')
+TEST_MODE = os.getenv('TEST_MODE', 'False').lower() in ('true', '1', 't')
 
 # Llama model settings
 LLAMA_URL = os.getenv('LLAMA_URL', 'http://localhost:11434')

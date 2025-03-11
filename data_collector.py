@@ -63,14 +63,18 @@ class DataCollector:
                 'enableRateLimit': True,
             })
             
-            # Use testnet if in test mode
-            if self.test_mode and 'test' in self.exchange.urls:
-                self.exchange.urls['api'] = self.exchange.urls['test']
-                logger.info(f"Using test environment for {self.exchange_id}")
+            # For Binance, set some options to ensure compatibility
+            if self.exchange_id.lower() == 'binance':
+                # Extend receive window to avoid timestamp errors
+                self.exchange.options['recvWindow'] = 60000
             
-            # Load markets
-            await self.exchange.load_markets()
-            logger.info(f"Successfully connected to {self.exchange_id} and loaded markets")
+            try:
+                # Load markets
+                await self.exchange.load_markets()
+                logger.info(f"Successfully connected to {self.exchange_id} and loaded markets")
+            except Exception as e:
+                # Re-raise the exception
+                raise
             
         except Exception as e:
             logger.error(f"Failed to initialize exchange connection: {str(e)}")
